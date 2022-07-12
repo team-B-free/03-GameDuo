@@ -1,7 +1,7 @@
 import { Router } from 'express';
 const router = Router();
-import bossraidController from '../../controllers/bossraid/bossraid-controller.js';
+import bossRaidController from '../../controllers/bossraid/bossraid-controller.js';
 
-router.get('/', bossraidController.getBossraidInfo);
+router.get('/', bossRaidController.getBossRaidInfo);
 
 export default router;
