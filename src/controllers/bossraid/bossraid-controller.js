@@ -5,7 +5,10 @@ import bossRaidService from '../../services/bossraid/bossraid-service.js';
 const bossRaidEnter = async (req, res, next) => {
   const { userId, level } = req.body;
 
-  const [statusCode, result] = await bossRaidService.bossRaidEnter(userId, level);
+  const [statusCode, result] = await bossRaidService.bossRaidEnter(
+    userId,
+    level,
+  );
 
   return res.status(statusCode).json(result);
 };
