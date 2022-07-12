@@ -2,6 +2,6 @@ import { Router } from 'express';
 const router = Router();
 import bossraidController from '../../controllers/bossraid/bossraid-controller.js';
 
-router.get('/', bossraidController.test);
+router.post('/enter', bossraidController.bossRaidEnter);
 
 export default router;
