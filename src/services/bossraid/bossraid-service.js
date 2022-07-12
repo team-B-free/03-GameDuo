@@ -20,8 +20,8 @@ const bossRaidEnter = async (userId, level) => {
     } catch (err) {
         console.error(err);
         return [
-            statusCode.DB_ERROR, errResponse()
-        ]
+            statusCode.INTERNAL_SERVER_ERROR, errResponse(statusCode.DB_ERROR, message.INTERNAL_SERVER_ERROR)
+        ];
     }
 };
 
