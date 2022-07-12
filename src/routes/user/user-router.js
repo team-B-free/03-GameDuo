@@ -1,7 +1,8 @@
 import { Router } from 'express';
-const router = Router();
 import userController from '../../controllers/user/user-controller.js';
 
-router.get('/', userController.test);
+const router = Router();
+
+router.post('/', userController.signUp); // 유저 생성
 
 export default router;
