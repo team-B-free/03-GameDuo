@@ -3,17 +3,23 @@ import statusCode from '../../utils/status-code.js';
 import message from '../../utils/response-message.js';
 import BossRaid from '../../models/bossraid.js';
 
-
 const bossRaidEnter = async (userId, level) => {
     try {
+        const bossRaids = await BossRaid.findAll();
+        const isEnter = bossRaids.filter(v => v.enteredUserId !== null && v.canEnter !== true)[0];
+        if (isEnter) {
+            return [statusCode.OK, response(statusCode.OK, { isEntered: false })];
+        }
+
         const bossRaid = await BossRaid.create({
             user_id: userId,
             level,
             canEnter: false,
+            enteredUserId: userId,
         });
 
         const data = {
-            isEntered: false,
+            isEntered: true,
             raidRecordId: bossRaid.id,
         };
         return [statusCode.CREATED, response(statusCode.CREATED, message.SUCCESS, data)];
