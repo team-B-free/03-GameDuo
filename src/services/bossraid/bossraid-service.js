@@ -24,14 +24,11 @@ const bossRaidInfo = async (req) => {
       } else {
         canEnter = bossRaidInfo[key]['canEnter'] = enterCheck(0);
       }
-      console.log(bossRaidInfo);
     }
     let result = {
       canEnter: canEnter,
       enteredUserId: enteredUserId,
     };
-
-    // 현재 진행중인 레이드가 있으면 여부는 무조건 0(N)을 보낸다
 
     let data = result;
     // 성공시
@@ -41,6 +38,45 @@ const bossRaidInfo = async (req) => {
   }
 };
 
+const bossRaidEnter = async (userId, level) => {
+  try {
+    const bossRaids = await BossRaid.findAll();
+    const isEnter = bossRaids.filter(
+      (bossRaid) =>
+        bossRaid.enteredUserId !== null && bossRaid.canEnter !== true,
+    )[0];
+    if (isEnter) {
+      return [statusCode.OK, response(statusCode.OK, { isEntered: false })];
+    }
+
+    const bossRaid = await BossRaid.create({
+      user_id: userId,
+      level,
+      canEnter: false,
+      enteredUserId: userId,
+    });
+
+    const data = {
+      isEntered: true,
+      raidRecordId: bossRaid.id,
+    };
+    return [
+      statusCode.CREATED,
+      response(statusCode.CREATED, message.SUCCESS, data),
+    ];
+  } catch (err) {
+    console.error(err);
+    return [
+      statusCode.INTERNAL_SERVER_ERROR,
+      errResponse(
+        statusCode.INTERNAL_SERVER_ERROR,
+        message.INTERNAL_SERVER_ERROR,
+      ),
+    ];
+  }
+};
+
 export default {
   bossRaidInfo,
+  bossRaidEnter,
 };
