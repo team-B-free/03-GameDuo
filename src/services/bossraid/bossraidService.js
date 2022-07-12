@@ -1,30 +1,30 @@
-import Bossraid from '../../models/bossraid.js';
+import BossRaid from '../../models/bossraid.js';
+import enterCheck from '../../utils/enter-check.js';
 //import { logger } from '../../config/winston.js';
 import statusCode from '../../utils/status-code.js';
 import message from '../../utils/response-message.js';
 import { errResponse, response } from '../../utils/response.js';
 
-const bossraidInfo = async (req) => {
+const bossRaidInfo = async (req) => {
   /**
    * @author 박성용
    * @version 1.0 22.07.12 보스레이드 정보 조회 기능
-   *
    */
   try {
-    let bossraidInfo = await Bossraid.findAll({
-      where: { user_id: 3 },
-      raw: true,
-    });
+    let bossRaidInfo = await BossRaid.findAll({ raw: true });
+
     let canEnter, enteredUserId;
 
-    for (let key in bossraidInfo) {
-      enteredUserId = bossraidInfo[key].enteredUserId;
+    for (let key in bossRaidInfo) {
+      enteredUserId = bossRaidInfo[key].enteredUserId;
+
       // 현재 입장한 유저가 없으면 입장 가능
       if (enteredUserId === null) {
-        canEnter = bossraidInfo[key]['canEnter'] = 1;
+        canEnter = bossRaidInfo[key]['canEnter'] = enterCheck(1);
       } else {
-        canEnter = bossraidInfo[key]['canEnter'] = 0;
+        canEnter = bossRaidInfo[key]['canEnter'] = enterCheck(0);
       }
+      console.log(bossRaidInfo);
     }
     let result = {
       canEnter: canEnter,
@@ -37,12 +37,10 @@ const bossraidInfo = async (req) => {
     // 성공시
     return response(statusCode.OK, message.SUCCESS, data);
   } catch (err) {
-    // logger.cause();
-    // throw new Error('에러 발생', { cause: err });
-    console.log(err);
+    return errResponse(statusCode.BAD_REQUEST, message.BAD_REQUEST);
   }
 };
 
 export default {
-  bossraidInfo,
+  bossRaidInfo,
 };
