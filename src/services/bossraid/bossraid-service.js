@@ -6,7 +6,7 @@ import BossRaid from '../../models/bossraid.js';
 const bossRaidEnter = async (userId, level) => {
     try {
         const bossRaids = await BossRaid.findAll();
-        const isEnter = bossRaids.filter(v => v.enteredUserId !== null && v.canEnter !== true)[0];
+        const isEnter = bossRaids.filter(bossRaid => bossRaid.enteredUserId !== null && bossRaid.canEnter !== true)[0];
         if (isEnter) {
             return [statusCode.OK, response(statusCode.OK, { isEntered: false })];
         }
@@ -26,7 +26,7 @@ const bossRaidEnter = async (userId, level) => {
     } catch (err) {
         console.error(err);
         return [
-            statusCode.INTERNAL_SERVER_ERROR, errResponse(statusCode.DB_ERROR, message.INTERNAL_SERVER_ERROR)
+            statusCode.INTERNAL_SERVER_ERROR, errResponse(statusCode.INTERNAL_SERVER_ERROR, message.INTERNAL_SERVER_ERROR)
         ];
     }
 };
