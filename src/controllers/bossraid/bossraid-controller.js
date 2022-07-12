@@ -1,4 +1,4 @@
-import bossRaidService from '../../services/bossraid/bossraidService.js';
+import bossRaidService from '../../services/bossraid/bossraid-service.js';
 
 const getBossRaidInfo = async (req, res) => {
   /**
