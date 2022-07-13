@@ -42,7 +42,7 @@ const bossRaidInfo = async (req) => {
  * @author 김영우
  * @version 1.0 보스레이드 시작 기능
  */
-const bossRaidEnter = async (userId, level) => {
+const enterBossRaid = async (userId, level) => {
   try {
     const bossRaids = await BossRaid.findAll();
     // 보스레이드중인지 검증
@@ -87,5 +87,5 @@ const bossRaidEnter = async (userId, level) => {
 
 export default {
   bossRaidInfo,
-  bossRaidEnter,
+  enterBossRaid,
 };
