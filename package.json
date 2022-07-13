@@ -1,23 +1,23 @@
 {
-  "name": "express-boilerplate",
+  "name": "GameDuo",
   "version": "1.0.0",
-  "description": "express-boilerplate",
+  "description": "GameDuo 프로젝트입니다.",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
     "start": "node src/bin/www.js",
     "dev": "nodemon src/bin/www.js"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/team-B-free/express-boilerplate"
+    "url": "https://github.com/team-B-free/03-GameDuo"
   },
   "author": "Team B Free",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/team-B-free/express-boilerplate/issues"
+    "url": "https://github.com/team-B-free/03-GameDuo/issues"
   },
-  "homepage": "https://github.com/team-B-free/express-boilerplate#readme",
+  "homepage": "https://github.com/team-B-free/03-GameDuo#readme",
   "dependencies": {
     "dotenv": "^16.0.1",
     "express": "^4.18.1",
@@ -29,5 +29,9 @@
     "winston": "^3.8.1",
     "winston-daily-rotate-file": "^4.7.1"
   },
-  "type": "module"
+  "type": "module",
+  "devDependencies": {
+    "@types/jest": "^28.1.4",
+    "jest": "^28.1.2"
+  }
 }

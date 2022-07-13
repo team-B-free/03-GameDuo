@@ -1,9 +1,14 @@
 import { Router } from 'express';
 import { validate } from 'express-validation';
-const router = Router();
-import bossraidController from '../../controllers/bossraid/bossraid-controller.js';
+import bossRaidController from '../../controllers/bossraid/bossraid-controller.js';
 import bossRaidValidator from '../../validations/bossraid/bossraid-validator.js';
+const router = Router();
+router.get('/', bossRaidController.getBossRaidInfo);
 
-router.post('/enter', validate(bossRaidValidator.bossRaidEnter), bossraidController.bossRaidEnter);
+router.post(
+  '/enter',
+  validate(bossRaidValidator.bossRaidEnter),
+  bossRaidController.bossRaidEnter,
+);
 
 export default router;
