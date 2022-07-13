@@ -1,7 +1,10 @@
 import moment from 'moment';
 
 const checkExpired = (enterTime, reqTime, bossRaidLimitSeconds) => {
-  enterTime = moment.utc(enterTime).format('YYYY-MM-DD HH:mm:ss');
+  enterTime = moment(enterTime, 'YYYY-MM-DD HH:mm:ss')
+    .add(9, 'h')
+    .format('YYYY-MM-DD HH:mm:ss');
+
   const deadline = moment
     .utc(enterTime)
     .add(bossRaidLimitSeconds, 's')
