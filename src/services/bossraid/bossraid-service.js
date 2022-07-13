@@ -1,8 +1,8 @@
 import { response, errResponse } from '../../utils/response.js';
 import statusCode from '../../utils/status-code.js';
 import message from '../../utils/response-message.js';
-import Bossraid from '../../models/bossraid.js';
-import BossraidRecord from '../../models/bossraid-record.js';
+import BossRaid from '../../models/bossraid.js';
+import BossRaidRecord from '../../models/bossraid-record.js';
 import { logger } from '../../config/winston.js';
 import getStaticData from '../../modules/static-data.js';
 import checkExpired from '../../modules/time.js';
@@ -14,12 +14,12 @@ const endBossRaid = async (userId, bossRaidRecordId, isSolved, reqTime) => {
 
     const { bossRaidLimitSeconds } = staticData;
 
-    const data = await BossraidRecord.findOne({
+    const data = await BossRaidRecord.findOne({
       where: {
         bossraid_id: bossRaidRecordId,
       },
       include: {
-        model: Bossraid,
+        model: BossRaid,
         attributes: ['user_id', 'level'],
       },
       attributes: ['bossraid_id', 'enter_time', 'end_time'],
@@ -58,13 +58,13 @@ const endBossRaid = async (userId, bossRaidRecordId, isSolved, reqTime) => {
       score = staticData.levels[level].score;
     }
 
-    const allBossRiadData = await Bossraid.findAll({
+    const allBossRiadData = await BossRaid.findAll({
       attributes: ['id'],
     });
 
     const bossRaidIds = allBossRiadData.map((item) => item.getDataValue('id'));
 
-    await BossraidRecord.update(
+    await BossRaidRecord.update(
       {
         endTime: reqTime,
         score,
@@ -74,7 +74,7 @@ const endBossRaid = async (userId, bossRaidRecordId, isSolved, reqTime) => {
       },
     );
 
-    await Bossraid.update(
+    await BossRaid.update(
       {
         canEnter: true,
         enteredUserId: null,
