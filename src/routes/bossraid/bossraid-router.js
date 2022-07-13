@@ -7,8 +7,8 @@ router.get('/', bossRaidController.getBossRaidInfo);
 
 router.post(
   '/enter',
-  validate(bossRaidValidator.bossRaidEnter),
-  bossRaidController.bossRaidEnter,
+  validate(bossRaidValidator.enterBossRaid),
+  bossRaidController.enterBossRaid,
 );
 
 export default router;

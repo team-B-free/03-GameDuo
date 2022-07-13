@@ -56,6 +56,7 @@ const enterBossRaid = async (userId, level) => {
     if (isEnter) {
       return [statusCode.OK, response(statusCode.OK, { isEntered: false })];
     }
+
     const bossRaid = await BossRaid.create({
       user_id: userId,
       level,
