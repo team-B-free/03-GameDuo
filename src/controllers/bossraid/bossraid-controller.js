@@ -12,6 +12,10 @@ const getBossRaidInfo = async () => {
   return res.status(bossRaidInfoData.status).send(bossRaidInfoData);
 };
 
+/**
+ * @author 김영우
+ * @version 1.0 보스레이드 시작 기능
+ */
 const bossRaidEnter = async (req, res, next) => {
   const { userId, level } = req.body;
 
