@@ -1,7 +1,6 @@
 import BossRaid from '../../models/bossraid.js';
 import BossRaidRecord from '../../models/bossraid-record.js';
 import enterCheck from '../../modules/enter-check.js';
-//import { logger } from '../../config/winston.js';
 import statusCode from '../../utils/status-code.js';
 import message from '../../utils/response-message.js';
 import { errResponse, response } from '../../utils/response.js';

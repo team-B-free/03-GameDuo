@@ -1,3 +1,3 @@
-# express-boilerplate
+# 03-GameDuo
 
-## 프로젝트 개발환경 초기 세팅입니다.
+## 보스레이드 PVE 콘텐츠 API 서버입니다.
