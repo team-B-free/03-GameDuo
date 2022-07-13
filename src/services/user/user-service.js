@@ -65,7 +65,7 @@ const userCheck = async (userId) => {
  * @params {object} 유저의 보스레이드와 보스레이드기록
  * @returns {object} 전처리된 유저의 보스레이드와 보스레이드기록
  */
-const recordPreprocessing = async (recordInfo) => {
+const recordPreprocessing = (recordInfo) => {
   const recordJson = JSON.parse(JSON.stringify(recordInfo));
 
   const data = {};
