@@ -1,6 +1,19 @@
+import moment from 'moment';
 import bossRaidService from '../../services/bossraid/bossraid-service.js';
-import statusCode from './../../utils/status-code.js';
-import message from './../../utils/response-message.js';
+
+const endBossRaid = async (req, res) => {
+  const reqTime = moment().format('YYYY-MM-DD HH:mm:ss');
+  const { userId, raidRecordId: bossRaidRecordId, isSolved } = req.body;
+
+  const [statusCode, result] = await bossRaidService.endBossRaid(
+    userId,
+    bossRaidRecordId,
+    isSolved,
+    reqTime,
+  );
+
+  return res.status(statusCode).send(result);
+};
 
 const getBossRaidInfo = async () => {
   /**
@@ -28,6 +41,7 @@ const enterBossRaid = async (req, res, next) => {
 };
 
 export default {
+  endBossRaid,
   getBossRaidInfo,
   enterBossRaid,
 };

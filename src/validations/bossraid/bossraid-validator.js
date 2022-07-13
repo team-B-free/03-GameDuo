@@ -1,5 +1,13 @@
 import Joi from 'joi';
 
+const endBossRaid = {
+  body: Joi.object({
+    userId: Joi.number().required(),
+    raidRecordId: Joi.number().required(),
+    isSolved: Joi.boolean().required(),
+  }),
+};
+
 /**
  * @author 김영우
  * @version 1.0 보스레이드 시작 body 검증
@@ -12,5 +20,6 @@ const enterBossRaid = {
 };
 
 export default {
+  endBossRaid,
   enterBossRaid,
 };
