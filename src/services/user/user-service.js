@@ -8,7 +8,7 @@ import BossraidRecord from '../../models/bossraid-record.js';
 /**
  * @author 강채현
  * @version 1.0 (DB) 유저 회원가입
- * @returns {array<number, object>} statusCode, response 또는 errResponse 객체
+ * @returns {array<number, object>} statusCode, response/errResponse
  */
 const signUp = async () => {
   try {
@@ -27,7 +27,7 @@ const signUp = async () => {
  * @author 오주환
  * @version 1.0 (DB) 유저 조회
  * @params {string} 유저 id
- * @returns {array<number, object>} statusCode, response 또는 errResponse 객체
+ * @returns {array<number, object>} statusCode, response/errResponse
  */
 const userCheck = async (userId) => {
   try {
@@ -73,12 +73,14 @@ const recordPreprocessing = async (recordInfo) => {
   let bossRaidHistory = [];
 
   for (let iterator of recordJson) {
+    const bossRaidRecord = iterator.BOSSRAID_RECORDs;
+
     // 해당 유저의 보스레이드 기록이 존재한다면
-    if (iterator.BOSSRAID_RECORDs.length > 0) {
-      bossRaidHistory.push(iterator.BOSSRAID_RECORDs);
+    if (bossRaidRecord.length > 0) {
+      bossRaidHistory.push(bossRaidRecord);
     }
     // score 계산을 위한 loop
-    for (iterator of iterator.BOSSRAID_RECORDs) {
+    for (iterator of bossRaidRecord) {
       totalScore += iterator.score;
     }
   }
