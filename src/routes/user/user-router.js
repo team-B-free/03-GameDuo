@@ -1,7 +1,15 @@
 import { Router } from 'express';
-const router = Router();
 import userController from '../../controllers/user/user-controller.js';
+import { validate } from 'express-validation';
+import userValidator from '../../validations/user/user-validator.js';
 
-router.get('/', userController.test);
+const router = Router();
+
+router.post('/', userController.signUp); // 유저 생성
+router.get(
+  '/:userId',
+  validate(userValidator.userCheck),
+  userController.userCheck,
+); // 유저 조회
 
 export default router;

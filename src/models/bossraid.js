@@ -10,7 +10,7 @@ class Bossraid extends Model {
           defaultValue: true,
         },
         enteredUserId: {
-          type: DataTypes.STRING(30),
+          type: DataTypes.INTEGER,
         },
         level: {
           type: DataTypes.INTEGER,

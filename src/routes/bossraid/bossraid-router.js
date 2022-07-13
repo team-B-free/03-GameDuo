@@ -10,4 +10,12 @@ router.patch(
   bossRaidController.endBossRaid,
 );
 
+router.get('/', bossRaidController.getBossRaidInfo);
+
+router.post(
+  '/enter',
+  validate(bossRaidValidator.enterBossRaid),
+  bossRaidController.enterBossRaid,
+);
+
 export default router;
