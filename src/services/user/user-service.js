@@ -41,6 +41,7 @@ const userCheck = async (userId) => {
         },
       ],
     });
+    // 해당 유저 id가 존재하지 않을 경우
     if (record.length === 0) {
       return [statusCode.OK, response(statusCode.NOT_FOUND, message.NOT_FOUND)];
     }
@@ -65,20 +66,27 @@ const userCheck = async (userId) => {
  * @returns {object} 전처리된 유저의 보스레이드와 보스레이드기록
  */
 const recordPreprocessing = async (recordInfo) => {
-  let recordJson = JSON.parse(JSON.stringify(recordInfo));
-  let data = {};
+  const recordJson = JSON.parse(JSON.stringify(recordInfo));
+
+  const data = {};
   let totalScore = 0;
   let bossRaidHistory = [];
+
   for (let iterator of recordJson) {
+    // 해당 유저의 보스레이드 기록이 존재한다면
     if (iterator.BOSSRAID_RECORDs.length > 0) {
       bossRaidHistory.push(iterator.BOSSRAID_RECORDs);
     }
+    // score 계산을 위한 loop
     for (iterator of iterator.BOSSRAID_RECORDs) {
       totalScore += iterator.score;
     }
   }
+
+  // 반환할 값 추가
   data.totalScore = totalScore;
   data.bossRaidHistory = bossRaidHistory;
+
   return data;
 };
 
