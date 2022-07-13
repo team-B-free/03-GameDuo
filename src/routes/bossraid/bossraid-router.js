@@ -4,7 +4,6 @@ import bossRaidController from '../../controllers/bossraid/bossraid-controller.j
 import bossRaidValidator from '../../validations/bossraid/bossraid-validator.js';
 const router = Router();
 
-router.get('/', bossRaidController.test);
 router.patch(
   '/end',
   validate(bossRaidValidator.endBossRaid),
