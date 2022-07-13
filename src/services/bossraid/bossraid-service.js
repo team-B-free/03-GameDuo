@@ -9,7 +9,9 @@ import checkExpired from '../../modules/time.js';
 
 const endBossRaid = async (userId, bossRaidRecordId, isSolved, reqTime) => {
   try {
-    const staticData = await getStaticData();
+    let staticData = await getStaticData();
+    staticData = JSON.parse(staticData);
+
     const { bossRaidLimitSeconds } = staticData;
 
     const data = await BossraidRecord.findOne({
@@ -35,7 +37,7 @@ const endBossRaid = async (userId, bossRaidRecordId, isSolved, reqTime) => {
     if (endTime) {
       return [
         statusCode.BAD_REQUEST,
-        errResponse(staticData.BAD_REQUEST, message.ALREADY_END_RAIDRECORDID),
+        errResponse(statusCode.BAD_REQUEST, message.ALREADY_END_RAIDRECORDID),
       ];
     }
 
