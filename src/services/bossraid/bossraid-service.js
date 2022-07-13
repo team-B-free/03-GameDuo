@@ -1,4 +1,5 @@
 import BossRaid from '../../models/bossraid.js';
+import BossRaidRecord from '../../models/bossraid-record.js';
 import enterCheck from '../../modules/enter-check.js';
 import statusCode from '../../utils/status-code.js';
 import message from '../../utils/response-message.js';
@@ -36,32 +37,41 @@ const bossRaidInfo = async (req) => {
   }
 };
 
-const bossRaidEnter = async (userId, level) => {
+/**
+ * @author 김영우
+ * @version 1.0 보스레이드 시작 기능
+ */
+const enterBossRaid = async (userId, level) => {
   try {
     const bossRaids = await BossRaid.findAll();
+    // 보스레이드중인지 검증
     const isEnter = bossRaids.filter(
       (bossRaid) =>
         bossRaid.enteredUserId !== null && bossRaid.canEnter !== true,
     )[0];
     if (isEnter) {
       return [statusCode.OK, response(statusCode.OK, { isEntered: false })];
-    } else {
-      const bossRaid = await BossRaid.create({
-        user_id: userId,
-        level,
-        canEnter: false,
-        enteredUserId: userId,
-      });
-
-      const data = {
-        isEntered: true,
-        raidRecordId: bossRaid.id,
-      };
-      return [
-        statusCode.CREATED,
-        response(statusCode.CREATED, message.SUCCESS, data),
-      ];
     }
+
+    const bossRaid = await BossRaid.create({
+      user_id: userId,
+      level,
+      canEnter: false,
+      enteredUserId: userId,
+    });
+
+    await BossRaidRecord.create({
+      bossraid_id: bossRaid.id,
+    });
+
+    const data = {
+      isEntered: true,
+      raidRecordId: bossRaid.id,
+    };
+    return [
+      statusCode.CREATED,
+      response(statusCode.CREATED, message.SUCCESS, data),
+    ];
   } catch (err) {
     console.error(err);
     return [
@@ -76,5 +86,5 @@ const bossRaidEnter = async (userId, level) => {
 
 export default {
   bossRaidInfo,
-  bossRaidEnter,
+  enterBossRaid,
 };

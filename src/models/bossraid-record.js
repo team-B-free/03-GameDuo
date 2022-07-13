@@ -11,12 +11,12 @@ class BossraidRecord extends Model {
         },
         enterTime: {
           type: DataTypes.DATE,
+          allowNull: false,
           defaultValue: DataTypes.NOW,
         },
         endTime: {
           type: DataTypes.DATE,
-          allowNull: false,
-          defaultValue: DataTypes.NOW,
+          allowNull: true,
         },
       },
       {
