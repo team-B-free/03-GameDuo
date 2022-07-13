@@ -61,14 +61,13 @@ const bossRaidEnter = async (userId, level) => {
         canEnter: false,
         enteredUserId: userId,
       });
-      console.log(bossRaid.id);
 
       await BossRaid.update(
         { enteredUserId: bossRaid.enteredUserId, canEnter: false },
         {
           where: {
-            // enteredUserId >= 1
-            enteredUserId: { [Op.gte]: 1 },
+            // userId >= 1
+            user_id: { [Op.gte]: 1 },
           },
         },
       );
