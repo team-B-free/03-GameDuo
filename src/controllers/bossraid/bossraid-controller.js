@@ -2,7 +2,7 @@ import bossRaidService from '../../services/bossraid/bossraid-service.js';
 import statusCode from './../../utils/status-code.js';
 import message from './../../utils/response-message.js';
 
-const getBossRaidInfo = async () => {
+const getBossRaidInfo = async (req, res) => {
   /**
    * @author 박성용
    * @version 1.0 22.07.12 보스레이드 정보 조회 기능
@@ -12,10 +12,10 @@ const getBossRaidInfo = async () => {
   return res.status(bossRaidInfoData.status).send(bossRaidInfoData);
 };
 
-const bossRaidEnter = async (req, res, next) => {
+const enterBossRaid = async (req, res, next) => {
   const { userId, level } = req.body;
 
-  const [statusCode, result] = await bossRaidService.bossRaidEnter(
+  const [statusCode, result] = await bossRaidService.enterBossRaid(
     userId,
     level,
   );
@@ -25,5 +25,5 @@ const bossRaidEnter = async (req, res, next) => {
 
 export default {
   getBossRaidInfo,
-  bossRaidEnter,
+  enterBossRaid,
 };
