@@ -32,22 +32,22 @@ const endBossRaid = async (userId, bossRaidRecordId, isSolved, reqTime) => {
     }
 
     const endTime = data.getDataValue('end_time');
-    // if (endTime) {
-    //   return [
-    //     statusCode.BAD_REQUEST,
-    //     errResponse(staticData.BAD_REQUEST, message.ALREADY_END_RAIDRECORDID),
-    //   ];
-    // }
+    if (endTime) {
+      return [
+        statusCode.BAD_REQUEST,
+        errResponse(staticData.BAD_REQUEST, message.ALREADY_END_RAIDRECORDID),
+      ];
+    }
 
     const enterTime = data.getDataValue('enter_time');
 
     const isExpired = checkExpired(enterTime, reqTime, bossRaidLimitSeconds);
-    // if (isExpired) {
-    //   return [
-    //     statusCode.BAD_REQUEST,
-    //     errResponse(statusCode.BAD_REQUEST, message.EXPIRED_RAIDRECORDID),
-    //   ];
-    // }
+    if (isExpired) {
+      return [
+        statusCode.BAD_REQUEST,
+        errResponse(statusCode.BAD_REQUEST, message.EXPIRED_RAIDRECORDID),
+      ];
+    }
 
     const level = data.BOSSRAID['level'];
     let score = 0;
