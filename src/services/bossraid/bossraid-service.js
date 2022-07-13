@@ -4,7 +4,6 @@ import enterCheck from '../../modules/enter-check.js';
 import statusCode from '../../utils/status-code.js';
 import message from '../../utils/response-message.js';
 import { errResponse, response } from '../../utils/response.js';
-import { Op } from 'sequelize';
 
 const bossRaidInfo = async (req) => {
   /**
@@ -39,13 +38,6 @@ const bossRaidInfo = async (req) => {
 };
 
 const bossRaidEnter = async (userId, level) => {
-  /**
-   * @author 김영우
-   * @version 1.0 22.07.12 보스레이드 시작 기능
-   *
-   * @author 박성용
-   * @version 1.1 22.07.13 보스레이드 시작시 현재 입장한 유저와 입장여부 업데이트
-   */
   try {
     const bossRaids = await BossRaid.findAll();
     const isEnter = bossRaids.filter(
@@ -61,17 +53,6 @@ const bossRaidEnter = async (userId, level) => {
         canEnter: false,
         enteredUserId: userId,
       });
-      console.log(bossRaid.id);
-
-      await BossRaid.update(
-        { enteredUserId: bossRaid.enteredUserId, canEnter: false },
-        {
-          where: {
-            // enteredUserId >= 1
-            enteredUserId: { [Op.gte]: 1 },
-          },
-        },
-      );
 
       const data = {
         isEntered: true,
