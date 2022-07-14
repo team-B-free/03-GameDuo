@@ -51,10 +51,11 @@ describe('다른 파일로 부터 모듈를 테스트 합니다', () => {
 });
 
 describe('true와 false를 테스트 합니다', () => {
-  test('2022년 7월 15일은 금요일 입니다.', () => {
+  test('2022년 7월 15일은 금요일 입니다(true)', () => {
     expect(getDay('2022-07-15')).toBeTruthy();
   });
-  test('2022년 7월 18일은 토요일이 아닙니다.', () => {
-    expect(getDay('2022-07-18')).toBeTruthy();
+  test('2022년 7월 15일은 금요일이 아닙니다(false)', () => {
+    let checkDay = getDay('2022-07-15') !== '금요일';
+    expect(checkDay).toBeFalsy();
   });
 });
