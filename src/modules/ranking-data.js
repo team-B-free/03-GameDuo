@@ -25,10 +25,8 @@ const getTopRankerInfo = async (userId) => {
 
   const isCached = await redisClient.exists(rainkingDataKey);
   if (isCached) {
-    console.log('캐싱된 데이터 가져오기');
     topRankerInfo = await redisClient.get(rainkingDataKey);
   } else {
-    console.log('랭킹 구하기 및 캐싱 후 데이터 가져오기');
     topRankerInfo = await cachingTopRankerInfo(userId);
   }
 
@@ -43,20 +41,20 @@ const cachingTopRankerInfo = async (userId) => {
         sequelize.cast(sequelize.fn('sum', sequelize.col('score')), 'float'),
         'totalScore',
       ],
+      [sequelize.cast(sequelize.col('user_id'), 'float'), 'userId'],
     ],
     include: {
       model: BossRaid,
-      attributes: ['user_id'],
+      attributes: [],
     },
-    group: ['user_id'],
+    group: 'user_id',
     limit: 5,
   });
 
   topRankerInfo.forEach((item, index) => {
-    item.userId = item['BOSSRAID.user_id'];
-    delete item['BOSSRAID.user_id'];
+    const isUserId = item.userId === parseInt(userId);
 
-    item.isUserId = item.userId === parseInt(userId) ? true : false;
+    item.isUserId = isUserId;
     item.ranking = index;
   });
 
