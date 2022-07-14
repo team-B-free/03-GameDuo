@@ -18,4 +18,10 @@ router.post(
   bossRaidController.enterBossRaid,
 );
 
+router.get(
+  '/topRankerList',
+  validate(bossRaidValidator.getTopRanker),
+  bossRaidController.getTopRanker,
+);
+
 export default router;

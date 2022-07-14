@@ -1,3 +1,4 @@
-const staticDataKey = 'staticdata';
+const staticDataKey = 'static_data';
+const rainkingDataKey = 'ranking_data';
 
-export { staticDataKey };
+export { staticDataKey, rainkingDataKey };

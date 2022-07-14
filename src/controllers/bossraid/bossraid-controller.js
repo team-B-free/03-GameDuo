@@ -40,8 +40,17 @@ const enterBossRaid = async (req, res, next) => {
   return res.status(statusCode).json(result);
 };
 
+const getTopRanker = async (req, res) => {
+  const { userid: userId } = req.headers;
+
+  const [statusCode, result] = await bossRaidService.getTopRanker(userId);
+
+  return res.status(statusCode).send(result);
+};
+
 export default {
   endBossRaid,
   getBossRaidInfo,
   enterBossRaid,
+  getTopRanker,
 };

@@ -3,10 +3,12 @@ import getStaticData from '../../modules/static-data.js';
 import checkExpired from '../../modules/time.js';
 import BossRaid from '../../models/bossraid.js';
 import BossRaidRecord from '../../models/bossraid-record.js';
+import User from '../../models/user.js';
 import enterCheck from '../../modules/enter-check.js';
 import statusCode from '../../utils/status-code.js';
 import message from '../../utils/response-message.js';
 import { errResponse, response } from '../../utils/response.js';
+import { getRankingData } from '../../modules/ranking-data.js';
 
 const endBossRaid = async (userId, bossRaidRecordId, isSolved, reqTime) => {
   try {
@@ -176,8 +178,39 @@ const enterBossRaid = async (userId, level) => {
   }
 };
 
+const getTopRanker = async (userId) => {
+  try {
+    const isExistUser = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!isExistUser) {
+      return [
+        statusCode.BAD_REQUEST,
+        errResponse(statusCode.BAD_REQUEST, message.BAD_REQUEST),
+      ];
+    }
+
+    const rankingData = await getRankingData(userId);
+
+    return [
+      statusCode.OK,
+      errResponse(statusCode.OK, message.SUCCESS, rankingData),
+    ];
+  } catch (error) {
+    logger.error(`getTopRanker Service Err: ${error}`);
+    return [
+      statusCode.DB_ERROR,
+      errResponse(statusCode.DB_ERROR, message.INTERNAL_SERVER_ERROR),
+    ];
+  }
+};
+
 export default {
   endBossRaid,
   bossRaidInfo,
   enterBossRaid,
+  getTopRanker,
 };
