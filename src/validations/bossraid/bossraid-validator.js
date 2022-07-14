@@ -8,6 +8,14 @@ const endBossRaid = {
   }),
 };
 
+const getTopRanker = {
+  headers: Joi.object({
+    userid: Joi.number().required(),
+  }).options({
+    allowUnknown: true,
+  }),
+};
+
 /**
  * @author 김영우
  * @version 1.0 보스레이드 시작 body 검증
@@ -21,5 +29,6 @@ const enterBossRaid = {
 
 export default {
   endBossRaid,
+  getTopRanker,
   enterBossRaid,
 };
