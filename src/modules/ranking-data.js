@@ -67,14 +67,18 @@ const cachingTopRankerInfo = async (userId) => {
 };
 
 const getMyRankingInfo = (topRankerInfo, userId) => {
-  const [myRankingInfo] = topRankerInfo.filter(
+  const myRankingInfo = topRankerInfo.filter(
     (item) => item['userId'] === parseInt(userId),
   );
 
-  const filteredMyRankingInfo = {
-    ranking: myRankingInfo.ranking,
-    totalScore: myRankingInfo.totalScore,
-  };
+  let filteredMyRankingInfo = null;
+
+  if (myRankingInfo.length > 0) {
+    filteredMyRankingInfo = {
+      ranking: myRankingInfo[0].ranking,
+      totalScore: myRankingInfo[0].totalScore,
+    };
+  }
 
   return filteredMyRankingInfo;
 };
