@@ -9,6 +9,7 @@ import statusCode from '../../utils/status-code.js';
 import message from '../../utils/response-message.js';
 import { errResponse, response } from '../../utils/response.js';
 import { getRankingData } from '../../modules/ranking-data.js';
+import { cachingTopRankerInfo } from '../../modules/ranking-data.js';
 
 const endBossRaid = async (userId, bossRaidRecordId, isSolved, reqTime) => {
   try {
@@ -88,6 +89,8 @@ const endBossRaid = async (userId, bossRaidRecordId, isSolved, reqTime) => {
         },
       },
     );
+
+    await cachingTopRankerInfo(userId);
 
     return [statusCode.OK, response(statusCode.NO_CONTENT, message.SUCCESS)];
   } catch (error) {
