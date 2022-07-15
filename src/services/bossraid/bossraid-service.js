@@ -13,6 +13,32 @@ import { cachingTopRankerInfo } from '../../modules/ranking-data.js';
 
 const endBossRaid = async (userId, bossRaidRecordId, isSolved, reqTime) => {
   try {
+    const isExistUser = await User.findOne({
+      where: {
+        id: userId,
+      },
+    });
+
+    if (!isExistUser) {
+      return [
+        statusCode.BAD_REQUEST,
+        errResponse(statusCode.BAD_REQUEST, message.INVALID_USERID),
+      ];
+    }
+
+    const isExistBossRaidRecordId = await BossRaidRecord.findOne({
+      where: {
+        id: bossRaidRecordId,
+      },
+    });
+
+    if (!isExistBossRaidRecordId) {
+      return [
+        statusCode.BAD_REQUEST,
+        errResponse(statusCode.BAD_REQUEST, message.INVALID_RECORDID),
+      ];
+    }
+
     let staticData = await getStaticData();
     staticData = JSON.parse(staticData);
 

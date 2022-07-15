@@ -10,6 +10,9 @@ const message = {
   NOT_USER_RAIDRECORDID: '유저의 raidRecordId 아님',
   ALREADY_END_RAIDRECORDID: '이미 종료된 raidRecordId',
   EXPIRED_RAIDRECORDID: '이미 만료된 raidRecordId',
+
+  INVALID_USERID: '존재하지 않는 userId',
+  INVALID_RECORDID: '존재하지 않는 recordId',
 };
 
 export default message;
