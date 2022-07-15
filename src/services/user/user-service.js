@@ -12,13 +12,19 @@ import BossraidRecord from '../../models/bossraid-record.js';
  */
 const signUp = async () => {
   try {
-    await User.create();
+    const user = await User.create();
 
-    return [statusCode.OK, response(statusCode.OK, message.SUCCESS)];
+    return [
+      statusCode.OK,
+      response(statusCode.OK, message.SUCCESS, { userId: user.id }),
+    ];
   } catch (err) {
     return [
-      statusCode.DB_ERROR,
-      errResponse(statusCode.DB_ERROR, message.DB_ERROR),
+      statusCode.INTERNAL_SERVER_ERROR,
+      errResponse(
+        statusCode.INTERNAL_SERVER_ERROR,
+        message.INTERNAL_SERVER_ERROR,
+      ),
     ];
   }
 };
