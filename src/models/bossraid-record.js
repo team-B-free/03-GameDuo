@@ -34,8 +34,10 @@ class BossraidRecord extends Model {
 
   static associate(db) {
     db.BossraidRecord.belongsTo(db.Bossraid, {
-      foreignKey: 'bossraid_id',
-      allowNull: false,
+      foreignKey: {
+        name: 'bossraid_id',
+        allowNull: false,
+      },
     });
   }
 }

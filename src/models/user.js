@@ -18,7 +18,9 @@ class User extends Model {
   }
 
   static associate(db) {
-    db.User.hasMany(db.Bossraid, { foreignKey: 'user_id', allowNull: false });
+    db.User.hasMany(db.Bossraid, {
+      foreignKey: { name: 'user_id', allowNull: false },
+    });
   }
 }
 
