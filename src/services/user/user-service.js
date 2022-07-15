@@ -43,7 +43,12 @@ const userCheck = async (userId) => {
       include: [
         {
           model: BossraidRecord,
-          attributes: ['id', 'score', 'enter_time', 'end_time'],
+          attributes: [
+            ['id', 'raidRecordId'],
+            'score',
+            'enter_time',
+            'end_time',
+          ],
         },
       ],
     });
