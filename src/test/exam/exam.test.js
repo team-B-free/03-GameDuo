@@ -3,7 +3,7 @@
  * @version 1.0 22.07.15 테스트 예시 코드 작성
  */
 
-import { timestable, getDay } from './testModules.js';
+import { timestable, getDay } from './test-modules.js';
 
 describe('Jest Test', () => {
   const str = 'Hello World';
@@ -57,5 +57,27 @@ describe('true와 false를 테스트 합니다', () => {
   test('2022년 7월 15일은 금요일이 아닙니다(false)', () => {
     let checkDay = getDay('2022-07-15') !== '금요일';
     expect(checkDay).toBeFalsy();
+  });
+});
+
+describe('여러 개의 파라미터화 테스트 케이스를 테스트합니다', () => {
+  test.each([
+    [2, 3, 6],
+    [4, 5, 20],
+    [9, 9, 81],
+    [8, 6, 48],
+  ])('%s * %s는 %s 입니다', (num1, num2, result) => {
+    expect(timestable(num1, num2)).toBe(result);
+  });
+});
+
+describe('여러 개의 함수에 대한 파라마터 테스트 케이스를 테스트합니다', () => {
+  describe.each([
+    [2, 3, 6],
+    [4, 5, 20],
+  ])('%s * %s는 %s 입니다', (num1, num2, result) => {
+    it('2+3은 5입니다', () => {
+      expect(timestable(num1, num2)).toBe(result);
+    });
   });
 });
