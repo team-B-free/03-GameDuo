@@ -1,3 +1,4 @@
+import db from '../../models/index.js';
 import { logger } from '../../config/winston.js';
 import getStaticData from '../../modules/static-data.js';
 import checkExpired from '../../modules/time.js';
@@ -163,8 +164,13 @@ const bossRaidInfo = async (req) => {
 /**
  * @author 김영우
  * @version 1.0 보스레이드 시작 기능
+ * @params {string} 유저 아이디
+ * @params {string} 보스레이드 레벨
+ * @returns {array<number, object>} statusCode, response/errResponse
  */
 const enterBossRaid = async (userId, level) => {
+  const transaction = await db.sequelize.transaction();
+
   try {
     const bossRaids = await BossRaid.findAll();
     // 보스레이드중인지 검증
@@ -173,19 +179,30 @@ const enterBossRaid = async (userId, level) => {
         bossRaid.enteredUserId !== null && bossRaid.canEnter !== true,
     )[0];
     if (isEnter) {
-      return [statusCode.OK, response(statusCode.OK, { isEntered: false })];
+      const error = new Error(message.ENTERED_BOSSRAID);
+      error.isEntered = false;
+      throw error;
     }
 
-    const bossRaid = await BossRaid.create({
-      user_id: userId,
-      level,
-      canEnter: false,
-      enteredUserId: userId,
-    });
+    // 동시성 검증 처리
+    const bossRaid = await BossRaid.create(
+      {
+        user_id: userId,
+        level,
+        canEnter: false,
+        enteredUserId: userId,
+      },
+      { transaction: transaction },
+    );
 
-    await BossRaidRecord.create({
-      bossraid_id: bossRaid.id,
-    });
+    await BossRaidRecord.create(
+      {
+        bossraid_id: bossRaid.id,
+      },
+      { transaction: transaction },
+    );
+
+    await transaction.commit();
 
     const data = {
       isEntered: true,
@@ -197,6 +214,15 @@ const enterBossRaid = async (userId, level) => {
     ];
   } catch (err) {
     console.error(err);
+    await transaction.rollback();
+
+    if (err.isEntered === false) {
+      return [
+        statusCode.ACCEPTED,
+        response(statusCode.ACCEPTED, err.message, { isEntered: false }),
+      ];
+    }
+
     return [
       statusCode.INTERNAL_SERVER_ERROR,
       errResponse(

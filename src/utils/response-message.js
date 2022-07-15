@@ -7,6 +7,7 @@ const message = {
   NOT_FOUND: '존재하지 않는 자원',
   INTERNAL_SERVER_ERROR: '서버 내부 오류',
 
+  ENTERED_BOSSRAID: '현재 진행중인 보스레이드',
   NOT_USER_RAIDRECORDID: '유저의 raidRecordId 아님',
   ALREADY_END_RAIDRECORDID: '이미 종료된 raidRecordId',
   EXPIRED_RAIDRECORDID: '이미 만료된 raidRecordId',
