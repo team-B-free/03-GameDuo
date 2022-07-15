@@ -15,7 +15,7 @@ const endBossRaid = async (req, res) => {
   return res.status(statusCode).send(result);
 };
 
-const getBossRaidInfo = async () => {
+const getBossRaidInfo = async (req, res) => {
   /**
    * @author 박성용
    * @version 1.0 22.07.12 보스레이드 정보 조회 기능
