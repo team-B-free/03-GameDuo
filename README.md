@@ -5,8 +5,7 @@
 `프로젝트 진행 기간 2022.07.11 ~ 2022.07.15`
 
 # ⛏ Skill
-<img src="https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=Node.js&logoColor=white"> <img src="https://img.shields.io/badge/Express-000000?style=for-the-badge&logo=Express&logoColor=white"> <img src="https://img.shields.io/badge/MySQL-4479A1?style=for-the-badge&logo=MySQL&logoColor=white"> <img src="https://img.shields.io/badge/Sequelize-52B0E7?style=for-the-badge&logo=Sequelize&logoColor=white">  
-<img src="https://img.shields.io/badge/Redis-DC382D?style=for-the-badge&logo=Redis&logoColor=white"> <img src="https://img.shields.io/badge/GitHub Actions-2088FF?style=for-the-badge&logo=GitHub Actions&logoColor=white">
+<img alt ="icon" wide ="60" height="60" src="https://www.svgrepo.com/show/354118/nodejs.svg" /> <img alt ="icon" wide ="60" height="60" src="https://www.svgrepo.com/show/330398/express.svg" /> <img alt= "icon" wide="60" height="60" src ="https://techstack-generator.vercel.app/mysql-icon.svg" /> <img alt ="icon" wide ="60" height="60" src="https://www.svgrepo.com/show/374071/sequelize.svg" /> <img alt ="icon" wide ="60" height="60" src="https://www.svgrepo.com/show/354272/redis.svg" /> <img alt ="icon" wide ="60" height="60" src="https://www.svgrepo.com/show/306098/githubactions.svg" /> <img src="https://techstack-generator.vercel.app/prettier-icon.svg" alt="icon" width="60" height="60" />
 
 # 요구 사항
 ### 1. 유저 관리
@@ -29,6 +28,15 @@
 - 보스레이드 랭킹 조회
   - 보스레이드 totalScore 내림차순 조회
 
+# 업무 분업
+| 이름 | EndPoint | 담당 API | 서비스 코드 |
+| :---------------: | :---------------: | :---------------: | :---------------: |
+| 강채현 | /api/user | 유저 생성 | [user.service](https://github.com/team-B-free/03-GameDuo/blob/main/src/services/user/user-service.js) |
+| 김영우 | /api/bossRaid/enter | 보스레이드 시작 | [bossRaid.service](https://github.com/team-B-free/03-GameDuo/blob/main/src/services/bossraid/bossraid-service.js) |
+| 박성용 | /api/bossRaid <br> /api/bossRaid/topRankerList | 보스레이드 상태 조회 <br/> 랭킹 조회 | [bossRaid.service](https://github.com/team-B-free/03-GameDuo/blob/main/src/services/bossraid/bossraid-service.js) <br/> [topRanker.module](https://github.com/team-B-free/03-GameDuo/blob/main/src/modules/ranking-data.js) |
+| 최예진 | /api/bossRaid/end <br> /api/bossRaid/topRankerList | 보스레이드 종료 <br/> 랭킹 조회 | [bossRaid.service](https://github.com/team-B-free/03-GameDuo/blob/main/src/services/bossraid/bossraid-service.js) <br/> [topRanker.module](https://github.com/team-B-free/03-GameDuo/blob/main/src/modules/ranking-data.js) |
+| 오주환 | /api/user/:id | 유저 조회 | [user.service](https://github.com/team-B-free/03-GameDuo/blob/main/src/services/user/user-service.js) |
+
 # API 설계
 👉[Click API 상세스펙](https://github.com/team-B-free/03-GameDuo/wiki)  
   
@@ -43,3 +51,30 @@
 |                   [@KCH6937](https://github.com/KCH6937)                   |                [@whoamixzerone](https://github.com/whoamixzerone)                |                 [@StarFace90](https://github.com/StarFace90)                  |                 [@chldppwls12](https://github.com/chldppwls12)                 |                   [@juhwano](https://github.com/juhwano)                   |
 | <br/><img src="https://avatars.githubusercontent.com/KCH6937" width="100"> | <br/><img src="https://avatars.githubusercontent.com/whoamixzerone" width="100"> | <br/><img src="https://avatars.githubusercontent.com/StarFace90" width="100"> | <br/><img src="https://avatars.githubusercontent.com/chldppwls12" width="100"> | <br/><img src="https://avatars.githubusercontent.com/juhwano" width="100"> |
 
+# 환경변수(ENV)
+.env 파일에 작성  
+아래 내용은 예시입니다
+```
+NODE_ENV = development
+DB_USER = local
+DB_PASSWORD = local
+DB_NAME = gameduo
+DB_HOST = localhost
+DB_DIALECT = mysql
+DB_TIMEZONE = +09:00
+REDIS_PORT = 6397
+JWT_SECRET = jwt_secret
+```
+
+# 설치하기
+```
+$ git clone https://github.com/team-B-free/03-GameDuo.git
+$ cd 03-GameDuo
+$ npm install
+```
+
+# 실행하기
+```
+# production mode
+$ npm start
+```
